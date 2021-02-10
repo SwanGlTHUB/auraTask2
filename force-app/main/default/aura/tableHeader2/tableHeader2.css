@@ -1,0 +1,18 @@
+.THIS .header-tool {
+    display: inline-block;
+    width: 100px;
+    margin-left: 2%;
+    margin-bottom: 1%;
+}
+
+.THIS .tools-wrapper{
+    position: relative;
+    background-color: #f3f2f2;
+    width: 100%;
+    height: 10%;
+    border-radius: 4px;
+}
+
+.THIS .lookup-wrapper{
+    margin-left: 1%;
+}

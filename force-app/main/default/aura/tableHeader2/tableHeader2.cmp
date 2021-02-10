@@ -1,0 +1,34 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <div class = 'header-wrapper'>
+        <div class = 'tools-wrapper'>
+            <div class = 'header-tool lookup-wrapper'>
+                <c:customLookupAura objectAPIName="hotel__c" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Hotel Name"/>
+            </div>
+            <div class = 'header-tool'>
+               <lightning:select label = 'Room Quantity' required = 'true'>
+                    <option value="One-room">One-room</option>
+                    <option value="Two-room">Two-room</option>
+                    <option value="Three-room">Three-room</option>
+                    <option value="Fourth-room">Fourth-room</option> 
+               </lightning:select>
+            </div>
+            <div class = 'header-tool'>
+                <lightning:input type = 'date' label = 'Start Date'/>
+             </div>
+             <div class = 'header-tool'>
+                <lightning:input type = 'date' label = 'End Date'/>
+             </div>
+            <div class = 'header-tool'>
+                <lightning:button label="Search" title="Neutral action"/>
+            </div>
+        </div>
+    </div>
+    <table class = 'slds-table'>
+        <thead>
+            <th title = 'headerCheckbox'></th>
+            <th title = 'headerCheckbox'></th>
+        </thead>
+    </table>
+    
+</aura:component>	
