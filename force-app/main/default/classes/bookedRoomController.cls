@@ -16,8 +16,8 @@ public with sharing class bookedRoomController {
         Booked_Room__c newBookedRoom = new Booked_Room__c(Hotel__c = relatedRoom.Hotel__c,
                                                           Trip__c = relatedTripId,
                                                           Room__c = relatedRoom.Id,
-                                                          Purchase_Price__c = relatedRoom.Purchase_Price__c,
-                                                          Selling_Price__c = relatedRoom.Selling_Price__c );
+                                                          Purchase_Price__c = relatedPrice.Purchase_Price__c,
+                                                          Selling_Price__c = relatedPrice.Selling_Price__c );
 
         insert newBookedRoom;
     }
