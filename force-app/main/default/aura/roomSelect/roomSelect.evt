@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Fire when room selected">
+    <aura:attribute name = 'room' type = 'sObject'/>
+</aura:event>

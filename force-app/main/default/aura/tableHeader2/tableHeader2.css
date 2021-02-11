@@ -16,3 +16,13 @@
 .THIS .lookup-wrapper{
     margin-left: 1%;
 }
+
+.THIS .footerButton{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.THIS .disabled{
+    display: none;
+}

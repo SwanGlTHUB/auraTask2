@@ -1,0 +1,12 @@
+<aura:component>
+    <aura:attribute name = 'room' type = 'sObject'/>
+    <aura:registerEvent name="roomSelect" type="c:roomSelect"/>
+    <td>
+        <input aura:id = 'roomCheckbox' onchange = '{!c.handleCheckboxChange}' type = 'checkbox'/>
+    </td>
+    <td title = 'Room Name'>{!v.room.roomName}</td>
+    <td title = 'Cost Price'>{!v.room.costPrice}</td>
+    <td title = 'Cost Total Price'>{!v.room.totalCostPrice}</td>
+    <td title = 'Selling Price'>{!v.room.sellPrice}</td>
+    <td title = 'Selling Total Price'>{!v.room.totalSellPrice}</td>
+</aura:component>	

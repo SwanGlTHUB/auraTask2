@@ -1,12 +1,20 @@
-<aura:component implements="flexipage:availableForAllPageTypes">
-    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+<aura:component controller = 'tableHeaderAura2Controller' implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="hotelName" type="sObject" default=""/>
+    <aura:attribute name="roomQuantity" type="String" default="undefined"/>
+    <aura:attribute name="startTrip" type="String" default="undefined"/>
+    <aura:attribute name="endTrip" type="String" default="undefined"/>
+    <aura:attribute name="roomsToDisplay" type="sObject" default="{}"/>
+    <aura:attribute name='selectedRooms' type="sObject" default = '{}'/>     
+    <aura:attribute name='footerButtonClass' type = 'String' default = 'disabled'/>
+    <aura:handler name="roomSelect" event="c:roomSelect" action="{!c.handleRoomSelection}"/>
     <div class = 'header-wrapper'>
         <div class = 'tools-wrapper'>
             <div class = 'header-tool lookup-wrapper'>
-                <c:customLookupAura objectAPIName="hotel__c" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Hotel Name"/>
+                <c:customLookupAura objectAPIName="hotel__c" IconName="standard:account" selectedRecord="{!v.hotelName}" label="Hotel Name"/>
             </div>
             <div class = 'header-tool'>
-               <lightning:select label = 'Room Quantity' required = 'true'>
+               <lightning:select onchange = '{!c.handleRoomQuantityChange}' label = 'Room Quantity' required = 'true'>
+                    <option value="None"></option>
                     <option value="One-room">One-room</option>
                     <option value="Two-room">Two-room</option>
                     <option value="Three-room">Three-room</option>
@@ -14,21 +22,37 @@
                </lightning:select>
             </div>
             <div class = 'header-tool'>
-                <lightning:input type = 'date' label = 'Start Date'/>
+                <lightning:input onchange = '{!c.handleStartTripChange}' type = 'date' label = 'Start Date'/>
              </div>
              <div class = 'header-tool'>
-                <lightning:input type = 'date' label = 'End Date'/>
+                <lightning:input onchange = '{!c.handleEndTripChange}' type = 'date' label = 'End Date'/>
              </div>
             <div class = 'header-tool'>
-                <lightning:button label="Search" title="Neutral action"/>
+                <lightning:button  label="Search" title="Neutral action" onclick = '{!c.handleSearchBtnClick}'/>
             </div>
         </div>
     </div>
     <table class = 'slds-table'>
         <thead>
-            <th title = 'headerCheckbox'></th>
-            <th title = 'headerCheckbox'></th>
+            <th title = 'Header Checkbox'>
+                <input aura:id = 'headerCheckbox' type = 'checkbox'/>
+            </th>
+            <th title = 'Room Name'>Room Name</th>
+            <th title = 'Cost Price'>Cost Price</th>
+            <th title = 'Cost Total Price'>Cost Total Price</th>
+            <th title = 'Selling Price'>Selling Price</th>
+            <th title = 'Selling Total Price'>Selling Total Price</th>
         </thead>
+        <tbody>
+            <aura:iteration items = '{!v.roomsToDisplay}' var = 'room'>
+                <tr>
+                    <c:tableContentAura2 room = '{!room}'></c:tableContentAura2>
+                </tr>
+            </aura:iteration>
+        </tbody>
+        <tfoot>
+            <lightning:button onclick = '{!c.handleFooterButton}' class = '{!v.footerButtonClass}' label = 'Create new trip'/>
+        </tfoot>
     </table>
     
 </aura:component>	
