@@ -13,16 +13,9 @@
         if(!Object.keys(selectedRooms).length){
             helper.showMyToast('Choose some room for trip')
             return
+        }else{
+            helper.createNewTrip(selectedRooms, component)
         }
-        let allIds = Object.keys(selectedRooms)
-        let totalOwnerCost = 0
-        let totalClientCost = 0
-        allIds.forEach((item) => {
-            totalOwnerCost += selectedRooms[item].totalCostPrice
-            totalClientCost += selectedRooms[item].totalSellPrice
-        })
-        helper.apex(component, 'createNewTrip', {costForClients: totalClientCost, costForOwner: totalOwnerCost})
-                
     },
     handleRoomSelection : function(component, event, helper) {
         let selectedRoom = event.getParam('room')

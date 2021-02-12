@@ -16,13 +16,14 @@ public inherited sharing class tableHeaderAura2Controller {
     }
 
     @AuraEnabled
-    public static Trip__c createNewTrip(Decimal costForOwner, Decimal costForClients){
+    public static String createNewTrip(Decimal costForOwner, Decimal costForClients){
         Integer numberOfTripRecords = [
             SELECT COUNT()
             FROM Trip__c
         ];
         Trip__c newTrip = new Trip__c(Name = 'Trip_' + String.valueOf(numberOfTripRecords), Cost_For_Clients__c = costForClients, Cost_For_Owner__c = costForOwner);
-        return newTrip;
+        insert newTrip;
+        return (String)newTrip.Id;
     }
     
     @AuraEnabled
@@ -32,19 +33,16 @@ public inherited sharing class tableHeaderAura2Controller {
             FROM Price__c
             WHERE Id = :relatedPriceId
         ];
-
         Room__c relatedRoom = [
             SELECT Hotel__c
             FROM Room__c
             WHERE Id = : relatedRoomId
         ];
-
         Booked_Room__c newBookedRoom = new Booked_Room__c(Hotel__c = relatedRoom.Hotel__c,
                                                           Trip__c = relatedTripId,
                                                           Room__c = relatedRoom.Id,
                                                           Purchase_Price__c = relatedPrice.Purchase_Price__c,
                                                           Selling_Price__c = relatedPrice.Selling_Price__c );
-
         insert newBookedRoom;
     }
 }

@@ -8,6 +8,45 @@
         });
         toastEvent.fire();
     },
+    createNewTrip: function(selectedRooms, component){  
+        let allSelectedRoomsIds = Object.keys(selectedRooms)
+        let totalOwnerCost = 0
+        let totalClientCost = 0
+        allSelectedRoomsIds.forEach((item) => {
+            totalOwnerCost += selectedRooms[item].totalCostPrice
+            totalClientCost += selectedRooms[item].totalSellPrice
+        })
+        this.apex(component, 'createNewTrip', {
+            costForOwner: totalOwnerCost,
+            costForClients: totalClientCost
+        })
+        .then((tripId) => {
+            let allPromises = []
+            console.log('farov')
+            console.log(tripId)
+            allSelectedRoomsIds.forEach((roomId) => {
+                let room = selectedRooms[roomId]
+                console.log('====')
+                console.log(JSON.parse(JSON.stringify(room)))
+                allPromises.push(this.apex(component, 'createBookedRoom', {
+                    relatedPriceId : room.priceId,
+                    relatedRoomId: room.roomId,
+                    relatedTripId: tripId
+               }))
+            })
+            Promise.all(allPromises)
+            .then(() => {
+                this.showMyToast('New trip was successfully created')
+            })
+            .catch((error) => {
+                console.log(error)
+                this.showMyToast('New trip was not created')
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    },
     setHeaderCheckboxStatus : function(component) {
         let selectedRooms = component.get('v.selectedRooms')
         let roomsToDisplay = component.get('v.roomsToDisplay')
@@ -45,7 +84,6 @@
                                     errors[0].message);
                         reject(errors[0].message);
                     } else {
-                        console.log("Unknown error");
                         reject("Unknown error");
                     }
                 }
